@@ -1,0 +1,62 @@
+{
+  "name": "printer-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^32.2.0",
+    "electron-builder": "^25.1.7",
+    "ws": "^8.18.0"
+  },
+  "build": {
+    "appId": "com.example.pos-printer-service",
+    "productName": "POS Printer Service",
+    "mac": {
+      "target": "dmg",
+      "icon": "logo.jpeg",
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "logo.jpeg"
+    },
+    "linux": {
+      "icon": "logo.jpeg"
+    },
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "**/*",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!.editorconfig",
+      "!**/._*",
+      "!{.env,.env.*,.npmrc,pnpm-lock.yaml,yarn.lock,package-lock.json,tsconfig.json}",
+      "!{node_modules,.git,.hg,.svn,CVS,RCS,SCCS,__pycache__,thumbs.db,.DS_Store,desktop.ini}"
+    ],
+    "extraResources": [
+      {
+        "from": "node_modules/node-thermal-printer/lib/core/",
+        "to": "core",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "bwip-js": "^4.5.1",
+    "node-thermal-printer": "^4.4.3"
+  }
+}

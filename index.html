@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gilgit App Printer Service</title>
+  <style>
+    :root {
+      --primary-color: #4a90e2;
+      --secondary-color: #f39c12;
+      --background-color: #f0f4f8;
+      --text-color: #2c3e50;
+      --success-color: #2ecc71;
+      --error-color: #e74c3c;
+    }
+    body {
+      font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      transition: background-color 0.3s ease;
+    }
+    .container {
+      background-color: white;
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    h1 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+    }
+    #startServiceBtn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      outline: none;
+      width: 100%;
+      max-width: 250px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #startServiceBtn:hover {
+      background-color: #3a7bd5;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    #status {
+      margin-top: 1.5rem;
+      font-weight: 500;
+      color: var(--text-color);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .printer-icon {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1.5rem;
+      fill: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 8px;
+      transition: background-color 0.3s ease;
+    }
+    .status-indicator.running {
+      background-color: var(--success-color);
+    }
+    .status-indicator.stopped {
+      background-color: var(--error-color);
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle">🌓</button>
+  <div class="container">
+    <svg class="printer-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+    </svg>
+    <h1>Gilgit App Printer Service</h1>
+    <button id="startServiceBtn">Start Printer Service</button>
+    <p id="status"><span class="status-indicator stopped"></span>Service is stopped</p>
+  </div>
+  <script src="renderer.js"></script>
+  <script> 
+    const startServiceBtn = document.getElementById('startServiceBtn');
+    const status = document.getElementById('status');
+    const statusIndicator = status.querySelector('.status-indicator');
+    const printerIcon = document.querySelector('.printer-icon');
+    const themeToggle = document.getElementById('themeToggle');
+    let isRunning = false;
+    let isDarkMode = false;
+
+    // startServiceBtn.addEventListener('click', () => {
+    //   isRunning = !isRunning;
+    //   if (isRunning) {
+    //     startServiceBtn.textContent = 'Stop Printer Service';
+    //     startServiceBtn.style.backgroundColor = 'var(--error-color)';
+    //     status.innerHTML = '<span class="status-indicator running"></span>Service is running';
+    //     printerIcon.classList.add('pulse');
+    //   } else {
+    //     startServiceBtn.textContent = 'Start Printer Service';
+    //     startServiceBtn.style.backgroundColor = 'var(--primary-color)';
+    //     status.innerHTML = '<span class="status-indicator stopped"></span>Service is stopped';
+    //     printerIcon.classList.remove('pulse');
+    //   }
+    // });
+
+    themeToggle.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      if (isDarkMode) {
+        document.body.style.setProperty('--background-color', '#2c3e50');
+        document.body.style.setProperty('--text-color', '#ecf0f1');
+        document.body.style.setProperty('--primary-color', '#3498db');
+      } else {
+        document.body.style.setProperty('--background-color', '#f0f4f8');
+        document.body.style.setProperty('--text-color', '#2c3e50');
+        document.body.style.setProperty('--primary-color', '#4a90e2');
+      }
+    });
+  </script>
+</body>
+</html>
